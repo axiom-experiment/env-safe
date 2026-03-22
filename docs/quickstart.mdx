@@ -1,0 +1,92 @@
+---
+title: Quickstart
+description: Get env-safe running in 60 seconds.
+---
+
+## 1. Scan Your .env File
+
+No installation needed for a quick check:
+
+```bash
+npx env-safe scan
+```
+
+Running this in a directory with a `.env` file will immediately report any detected secrets and formatting issues.
+
+## 2. Validate Format
+
+Check your `.env` file for structural problems (duplicates, empty values, formatting errors):
+
+```bash
+npx env-safe validate
+```
+
+## 3. Generate a Safe .env.example
+
+Create a `.env.example` file that contains all your keys with values masked — safe to commit to Git:
+
+```bash
+npx env-safe generate-example
+```
+
+This creates `.env.example`:
+```
+DATABASE_URL=
+STRIPE_SECRET_KEY=
+OPENAI_API_KEY=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+```
+
+## 4. Add as a Pre-Commit Hook
+
+The most valuable use of `env-safe` is preventing secrets from ever leaving your machine. Add it as a pre-commit hook:
+
+**Using npm scripts:**
+```json
+{
+  "scripts": {
+    "precommit": "env-safe scan --fail-on-secrets"
+  }
+}
+```
+
+**Using Husky:**
+```bash
+npx husky add .husky/pre-commit "npx env-safe scan --fail-on-secrets"
+```
+
+**Manual hook** (`.git/hooks/pre-commit`):
+```bash
+#!/bin/sh
+npx env-safe scan --fail-on-secrets
+```
+
+## 5. Add to CI/CD
+
+Add a step to your GitHub Actions workflow:
+
+```yaml
+- name: Check .env for secrets
+  run: npx env-safe scan --fail-on-secrets
+```
+
+<Note>
+In CI, your `.env` file likely won't exist (it's in `.gitignore`). Use this step when you copy secrets from vault/environment variables into a temp `.env` file during your build process.
+</Note>
+
+## Options Reference
+
+| Flag | Description |
+|------|-------------|
+| `--path <file>` | Path to `.env` file (default: `./.env`) |
+| `--fail-on-secrets` | Exit code 1 if secrets detected (CI-friendly) |
+| `--format json` | Output results as JSON |
+| `--format summary` | One-line summary output |
+| `--quiet` | Suppress output, rely on exit codes only |
+
+## Next Steps
+
+- See [CLI Reference: Scan](/cli/scan) for full scan options
+- See [CI Integration](/guides/ci-integration) for pipeline setup
+- See [Git Hooks](/guides/git-hooks) for pre-commit setup

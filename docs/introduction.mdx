@@ -1,0 +1,78 @@
+---
+title: Introduction
+description: Scan .env files for exposed secrets, validate format, and auto-generate .env.example — keep your environment variables safe.
+---
+
+## What is env-safe?
+
+`env-safe` is a zero-dependency Node.js CLI tool that protects you from one of the most common developer security mistakes: accidentally exposing secrets in your `.env` files.
+
+It does three things:
+
+<CardGroup cols={3}>
+  <Card title="Scan for Secrets" icon="shield" color="#16a34a">
+    Detects patterns matching API keys, tokens, passwords, and credentials — before they end up in your repository or logs.
+  </Card>
+  <Card title="Validate Format" icon="check-circle" color="#16a34a">
+    Validates your `.env` file structure: duplicate keys, missing values, invalid formatting, and common mistakes.
+  </Card>
+  <Card title="Generate .env.example" icon="file-plus" color="#16a34a">
+    Automatically creates a `.env.example` with all your keys but no values — safe to commit, useful for collaborators.
+  </Card>
+</CardGroup>
+
+## Why env-safe?
+
+Every week, developers accidentally commit real API keys, database passwords, and tokens to Git. GitHub alone detects millions of secrets per year. Most of these are caught — eventually — but the damage is done the moment they're pushed.
+
+`env-safe` runs in under a second, has zero dependencies, and integrates with your existing workflow as a pre-commit hook, CI step, or one-off scan.
+
+```bash
+npx env-safe scan
+```
+
+That's it. If your `.env` file has secrets that look real, `env-safe` will tell you.
+
+## Key Features
+
+- **22 detection patterns** covering AWS keys, GitHub tokens, Stripe secrets, Twilio, SendGrid, database URLs, and more
+- **Zero runtime dependencies** — just Node.js ≥16
+- **Three output formats**: terminal (colored), JSON, and summary
+- **Pre-commit hook ready** — exits with code 1 on detected secrets
+- **CI/CD integration** — use `--fail-on-secrets` flag in pipelines
+- **.env.example generation** with automatic value masking
+
+## Quick Example
+
+```bash
+$ npx env-safe scan
+
+🔍 Scanning .env...
+
+⚠️  POTENTIAL SECRET DETECTED
+Key: STRIPE_SECRET_KEY
+Value: sk_live_4xK...   ← looks like a real Stripe live key
+Line: 14
+
+⚠️  POTENTIAL SECRET DETECTED
+Key: AWS_SECRET_ACCESS_KEY
+Value: wJal...   ← matches AWS secret key pattern
+Line: 22
+
+✅ 2 issues found. Review before committing.
+```
+
+## Installation
+
+```bash
+# Run without installing (recommended for one-off scans)
+npx env-safe scan
+
+# Or install globally
+npm install -g env-safe
+
+# Or as a dev dependency (recommended for team projects)
+npm install --save-dev env-safe
+```
+
+Ready to get started? See the [Quickstart](/quickstart) guide.
