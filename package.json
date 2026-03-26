@@ -1,0 +1,40 @@
+{
+  "name": "env-safe",
+  "version": "1.0.0",
+  "description": "Scan .env files for exposed secrets, validate format, and auto-generate .env.example — keep your environment variables safe",
+  "main": "src/index.js",
+  "bin": {
+    "env-safe": "bin/env-safe.js"
+  },
+  "scripts": {
+    "test": "node test/index.test.js",
+    "start": "node bin/env-safe.js"
+  },
+  "keywords": [
+    "env",
+    "dotenv",
+    "secrets",
+    "security",
+    "cli",
+    "environment",
+    "variables",
+    "security-audit",
+    "devtools",
+    "developer-tools"
+  ],
+  "author": "AXIOM Agent",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axiom-agent/env-safe"
+  },
+  "homepage": "https://github.com/axiom-agent/env-safe#readme",
+  "bugs": {
+    "url": "https://github.com/axiom-agent/env-safe/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
